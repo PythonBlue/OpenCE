@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from harness import CHECK_FAILED, build, mutated, read, run  # noqa: E402
 
 SOURCE = "port/linux/src/dsound_sdl.c"
-CASES = ["silent-voice", "mono"]
+CASES = ["reference", "impulse", "sines", "aliases", "silent-voice", "mono"]
 
 # a fault in the mixer, and the case that must catch it
 NEGATIVE_CONTROLS = {
@@ -65,10 +65,9 @@ def test_vectors_add_as_taps_do():
 
 @pytest.mark.parametrize("control", NEGATIVE_CONTROLS)
 def test_negative_control(control):
-    return
-    #fault, case = NEGATIVE_CONTROLS[control]
-    #status, output = run(build("mixer", generated(fault=fault)), case)
-    #assert status == CHECK_FAILED, f"the mixer with a fault ({control}) passed '{case}': the test cannot see it"
+    fault, case = NEGATIVE_CONTROLS[control]
+    status, output = run(build("mixer", generated(fault=fault)), case)
+    assert status == CHECK_FAILED, f"the mixer with a fault ({control}) passed '{case}': the test cannot see it"
 
 
 if __name__ == "__main__":

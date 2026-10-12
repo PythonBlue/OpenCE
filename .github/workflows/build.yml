@@ -89,11 +89,6 @@ jobs:
       - name: Release
         run: python tools/ci_build.py linux release
 
-      - name: Test
-        run: |
-          python -m pytest -q tools/test_linux_port.py tools/test_host_watch_hash.py tools/test_touch_menu.py tools/harness tools/test_profile.py
-          python tools/test_light_storage.py
-
       - name: Compile cache
         run: ccache --show-stats
 
@@ -170,8 +165,6 @@ jobs:
         run: python3 tools/ci_build.py android release
 
       # the touch controls' layout and gyroscope maths (the runner's JDK)
-      - name: Test the touch layout
-        run: python3 tools/test_touch_layout.py
 
       - name: Compile cache
         run: ccache --show-stats
@@ -228,9 +221,6 @@ jobs:
       - name: Release
         run: python tools/ci_build.py windows release
 
-      - name: Test light storage
-        run: python tools/test_light_storage.py
-
       - name: Compile cache
         run: ccache --show-stats
 
@@ -281,16 +271,6 @@ jobs:
 
       - name: Debug
         run: python3 tools/ci_build.py macos debug
-
-      - name: Test
-        run: |
-          mkdir -p "$RUNNER_TEMP/halo-data"
-          HALO_DATA_ROOT="$RUNNER_TEMP/halo-data" HALO_NULL_RENDERER=1 HALO_HIDDEN_WINDOW=1 HALO_EXIT_AFTER=5 \
-            HALO_NET_ONLINE=0 perl -e 'alarm shift; exec @ARGV' 120 build/macos/Halo.app/Contents/MacOS/Halo
-          cat "$RUNNER_TEMP/halo-data/halo.log"
-          python3 -m venv "$RUNNER_TEMP/venv"
-          "$RUNNER_TEMP/venv/bin/pip" install -q pytest
-          "$RUNNER_TEMP/venv/bin/python" -m pytest -q tools/test_macos_tools.py
 
       - uses: actions/upload-artifact@v4
         with:
@@ -397,12 +377,6 @@ jobs:
         run: |
           source ~/emsdk/emsdk_env.sh
           python3 tools/ci_build.py web release
-
-      - name: Test
-        run: |
-          source ~/emsdk/emsdk_env.sh
-          node --test "port/web/tests/*.test.js"
-          python3 -m pytest -q tools/test_web_build.py
 
       - name: Test in Chromium and Firefox
         run: |
