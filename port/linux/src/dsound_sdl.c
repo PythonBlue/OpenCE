@@ -498,7 +498,7 @@ static enum resampler_mode resampler_mode = RESAMPLER_SINC;
 
 static enum resampler_mode get_resampler_mode_from_config(void)
 {
-	const char *setting = config_string("audio.resampler");
+	char const *setting = config_string("audio.resampler");
 
 	if (setting)
 	{
