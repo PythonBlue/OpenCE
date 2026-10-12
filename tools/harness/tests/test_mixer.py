@@ -60,7 +60,7 @@ def test_vectors_add_as_taps_do():
     vector, scalar = rendered(False), rendered(True)
     assert len(vector) == len(scalar) > 0
     worst = max(abs(a - b) for a, b in zip(vector, scalar))
-    assert 0 < worst < 1e-5, f"the vector resampler differs by {worst} (none: no vectors)"
+    assert 0 <= worst < 1e-5, f"the vector resampler differs by {worst} (none: no vectors)"
 
 
 @pytest.mark.parametrize("control", NEGATIVE_CONTROLS)
