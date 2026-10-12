@@ -401,6 +401,7 @@ jobs:
     # latest/download links); then all but the newest five build-* releases
     # go, tags and all. Only for main, and only when every platform built.
     needs: [linux, android, windows, web, macos]
+    if: ${{ github.ref == 'refs/heads/mac' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
