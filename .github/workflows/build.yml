@@ -356,33 +356,6 @@ jobs:
           name: halo-macos-release
           path: build/macos/Halo.dmg
           retention-days: 7
-
-  release:
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: halo-macos-release
-          path: release
-
-      - name: Publish
-        run: |
-          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
-            echo "release $GITHUB_REF_NAME is there already: left as it is"
-            exit 0
-          fi
-          gh release create "$GITHUB_REF_NAME" release/Halo.dmg --verify-tag \
-            --title "Halo for Mac $GITHUB_REF_NAME" --notes-file .github/release-notes.md
   web:
     # Emscripten (emsdk, the version below, cached) builds the web port's
     # site (port/web/README.md); the tests check its graph, the page's
