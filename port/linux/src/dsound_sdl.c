@@ -483,23 +483,22 @@ next, so the blend is a multiply and an add a tap */
 static float resampler_phases[RESAMPLER_TABLE_STEPS + 1][RESAMPLER_TAPS] RESAMPLER_ALIGNED;
 static float resampler_deltas[RESAMPLER_TABLE_STEPS][RESAMPLER_TAPS] RESAMPLER_ALIGNED;
 
-/* How source samples are converted to the output sample rate */
-enum resampler_mode
-{
 	/* windowed sinc low pass */
-	RESAMPLER_SINC,
+#define RESAMPLER_SINC 1
 	/* linear interpolation: it suppresses unwanted spectral images
 	less effectively, but it is a brighter alternative */
-	RESAMPLER_LINEAR,
-};
+#define RESAMPLER_LINEAR 0
+
 /* audio.resampler */
 
-static enum resampler_mode resampler_mode = RESAMPLER_SINC;
+static int resampler_mode = RESAMPLER_LINEAR;
 
-static enum resampler_mode get_resampler_mode_from_config(void)
+static int get_resampler_mode_from_config(void)
 {
-	char const *setting = config_string("audio.resampler");
+	const char *setting = config_string("audio.resampler");
 
+	if (setting)
+	{
 		if (!strcmp(setting, "sinc"))
 		{
 			return RESAMPLER_SINC;
@@ -508,6 +507,7 @@ static enum resampler_mode get_resampler_mode_from_config(void)
 		{
 			return RESAMPLER_LINEAR;
 		}
+	}
 	return RESAMPLER_LINEAR;
 }
 
