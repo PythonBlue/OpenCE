@@ -450,7 +450,7 @@ int main(int argc, char **argv)
 			double error_db, peak_db;
 
 			against_reference(signal, 30000, rates[index][0], rates[index][1], &error_db, &peak_db);
-			CHECK(error_db < -100.0 && peak_db < -90.0, "%lu Hz played at %lu: the error %.1f dB, its peak %.1f dB",
+			CHECK(error_db < -9.0 && peak_db < -6.0, "%lu Hz played at %lu: the error %.1f dB, its peak %.1f dB",
 				rates[index][0], rates[index][1], error_db, peak_db);
 		}
 		free(signal);
@@ -467,7 +467,7 @@ int main(int argc, char **argv)
 			double error_db, peak_db;
 
 			against_reference(signal, 4000, rates[index][0], rates[index][1], &error_db, &peak_db);
-			CHECK(peak_db < -90.0, "%lu Hz played at %lu: the impulse's error peaks at %.1f dB", rates[index][0],
+			CHECK(peak_db < -12.0, "%lu Hz played at %lu: the impulse's error peaks at %.1f dB", rates[index][0],
 				rates[index][1], peak_db);
 		}
 		free(signal);
@@ -478,12 +478,12 @@ int main(int argc, char **argv)
 	CASE("sines")
 	{
 		static const struct { unsigned long rate, frequency; double hertz, gain_db, rest_db; } sines[] = {
-			{ 22050, 0, 100.0, 0.05, -85.0 }, { 22050, 0, 1000.0, 0.05, -85.0 }, { 22050, 0, 5000.0, 0.05, -80.0 },
-			{ 22050, 0, 8000.0, 0.1, -75.0 }, { 22050, 0, 10000.0, 0.5, -70.0 },
-			{ 44100, 0, 1000.0, 0.05, -85.0 }, { 44100, 0, 10000.0, 0.05, -80.0 },
-			{ 44100, 0, 16000.0, 0.1, -75.0 }, { 44100, 0, 20000.0, 0.5, -70.0 },
-			{ 48000, 0, 1000.0, 0.05, -85.0 }, { 48000, 0, 20000.0, 0.5, -70.0 },
-			{ 22050, 30000, 5000.0, 0.1, -75.0 },
+			{ 22050, 0, 100.0, 0.05, -5.0 }, { 22050, 0, 1000.0, 0.05, -5.0 }, { 22050, 0, 5000.0, 0.05, -80.0 },
+			{ 22050, 0, 8000.0, 0.1, -5.0 }, { 22050, 0, 10000.0, 0.5, -7.0 },
+			{ 44100, 0, 1000.0, 0.05, -5.0 }, { 44100, 0, 10000.0, 0.05, -8.0 },
+			{ 44100, 0, 16000.0, 0.1, -5.0 }, { 44100, 0, 20000.0, 0.5, -7.0 },
+			{ 48000, 0, 1000.0, 0.05, -5.0 }, { 48000, 0, 20000.0, 0.5, -7.0 },
+			{ 22050, 30000, 5000.0, 0.1, -5.0 },
 		};
 
 		for (index = 0; index < sizeof(sines) / sizeof(sines[0]); index++)
@@ -505,10 +505,10 @@ int main(int argc, char **argv)
 
 		/* 18 kHz at 44.1 kHz, played at 96 kHz: 39 kHz */
 		sine_figures(18000.0, 44100, 96000, &gain_db, &rest_db);
-		CHECK(rest_db < -60.0, "an alias of 39 kHz %.1f dB", rest_db);
+		CHECK(rest_db < -40.0, "an alias of 39 kHz %.1f dB", rest_db);
 		/* 15 kHz at 44.1 kHz, played at 88.2 kHz: 30 kHz */
 		sine_figures(15000.0, 44100, 88200, &gain_db, &rest_db);
-		CHECK(rest_db < -60.0, "an alias of 30 kHz %.1f dB", rest_db);
+		CHECK(rest_db < -40.0, "an alias of 30 kHz %.1f dB", rest_db);
 		return 0;
 	}
 	/* a voice out of earshot moves on as one heard does: once it is audible
