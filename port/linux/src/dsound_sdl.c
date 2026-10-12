@@ -484,32 +484,14 @@ static float resampler_phases[RESAMPLER_TABLE_STEPS + 1][RESAMPLER_TAPS] RESAMPL
 static float resampler_deltas[RESAMPLER_TABLE_STEPS][RESAMPLER_TAPS] RESAMPLER_ALIGNED;
 
 	/* windowed sinc low pass */
-#define RESAMPLER_SINC 1
+#define RESAMPLER_SINC true
 	/* linear interpolation: it suppresses unwanted spectral images
 	less effectively, but it is a brighter alternative */
-#define RESAMPLER_LINEAR 0
+#define RESAMPLER_LINEAR false
 
 /* audio.resampler */
 
-static int resampler_mode = RESAMPLER_LINEAR;
-
-static int get_resampler_mode_from_config(void)
-{
-	const char *setting = config_string("audio.resampler");
-
-	if (setting)
-	{
-		if (!strcmp(setting, "sinc"))
-		{
-			return RESAMPLER_SINC;
-		}
-		if (!strcmp(setting, "linear"))
-		{
-			return RESAMPLER_LINEAR;
-		}
-	}
-	return RESAMPLER_LINEAR;
-}
+static BOOL resampler_mode;
 
 static double bessel_i0(double x)
 {
@@ -1396,7 +1378,7 @@ static void audio_start(void)
 	audio_started = TRUE;
 	master_volume = (float)config_real("audio.volume");
 	reverb_enabled = config_boolean("audio.reverb");
-	resampler_mode = get_resampler_mode_from_config();
+	resampler_mode = config_boolean("audio.sinc");
 	resampler_initialize();
 	resampler_phases_initialize();
 	reverb_initialize();
@@ -1740,7 +1722,7 @@ VOID WINAPI DirectSoundDoWork(void)
 		it can only be changed from config.toml.
 		So currently, get_resampler_mode_from_config call here does nothing.
 		Remove this comment when audio.resampler can be changed through UI */
-		resampler_mode = get_resampler_mode_from_config();
+		resampler_mode = config_boolean("audio.sinc");
 	}
 	streams_complete_finished();
 }

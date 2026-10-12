@@ -189,7 +189,7 @@ static const struct config_setting config_settings[] =
 		"Reverberate the world's sounds as the place the player is in does (the\n"
 		"maps' sound environments, as the Xbox's I3DL2 reverb did); false keeps\n"
 		"them dry." },
-	{ "audio.resampler", _config_string, "\"linear\"", "HALO_AUDIO_RESAMPLER", _environment_value, _platform_all,
+	{ "audio.sinc", _config_bool, "false", "HALO_AUDIO_SINC", _environment_value, _platform_all,
 		"The sample-rate conversion mode:\n"
 		"\"sinc\" for band-limited interpolation,\n"
 		"or \"linear\" (the default) for a less filtered, brighter alternative." },
