@@ -500,8 +500,6 @@ static enum resampler_mode get_resampler_mode_from_config(void)
 {
 	char const *setting = config_string("audio.resampler");
 
-	if strcmp(setting, ""))
-	{
 		if (!strcmp(setting, "sinc"))
 		{
 			return RESAMPLER_SINC;
@@ -510,8 +508,7 @@ static enum resampler_mode get_resampler_mode_from_config(void)
 		{
 			return RESAMPLER_LINEAR;
 		}
-	}
-	return RESAMPLER_SINC;
+	return RESAMPLER_LINEAR;
 }
 
 static double bessel_i0(double x)
