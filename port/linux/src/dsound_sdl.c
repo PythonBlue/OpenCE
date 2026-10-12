@@ -787,7 +787,7 @@ static void mix_voice(struct sdl_stream *stream, float *output, float *send, uns
 			/* a voice turned all the way down (out of earshot), and not
 			sending to the reverb, only moves on */
 		}
-		else if (resampler_mode == RESAMPLER_LINEAR)
+		else if (!resampler_mode)
 		{
 			unsigned long first = stream->center % RESAMPLER_HISTORY;
 			unsigned long next = (first + 1) % RESAMPLER_HISTORY;
