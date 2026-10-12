@@ -500,7 +500,7 @@ static enum resampler_mode get_resampler_mode_from_config(void)
 {
 	char const *setting = config_string("audio.resampler");
 
-	if (setting)
+	if strcmp(setting, ""))
 	{
 		if (!strcmp(setting, "sinc"))
 		{
