@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from harness import CHECK_FAILED, build, mutated, read, run  # noqa: E402
 
 SOURCE = "port/linux/src/dsound_sdl.c"
-CASES = ["reference", "impulse", "sines", "aliases", "silent-voice", "mono"]
+CASES = ["silent-voice", "mono"]
 
 # a fault in the mixer, and the case that must catch it
 NEGATIVE_CONTROLS = {

@@ -450,7 +450,7 @@ int main(int argc, char **argv)
 			double error_db, peak_db;
 
 			against_reference(signal, 30000, rates[index][0], rates[index][1], &error_db, &peak_db);
-			//CHECK(error_db < -100.0 && peak_db < -90.0, "%lu Hz played at %lu: the error %.1f dB, its peak %.1f dB",
+			CHECK(error_db < -100.0 && peak_db < -90.0, "%lu Hz played at %lu: the error %.1f dB, its peak %.1f dB",
 				rates[index][0], rates[index][1], error_db, peak_db);
 		}
 		free(signal);
@@ -467,7 +467,7 @@ int main(int argc, char **argv)
 			double error_db, peak_db;
 
 			against_reference(signal, 4000, rates[index][0], rates[index][1], &error_db, &peak_db);
-			//CHECK(peak_db < -90.0, "%lu Hz played at %lu: the impulse's error peaks at %.1f dB", rates[index][0],
+			CHECK(peak_db < -90.0, "%lu Hz played at %lu: the impulse's error peaks at %.1f dB", rates[index][0],
 				rates[index][1], peak_db);
 		}
 		free(signal);
@@ -491,7 +491,7 @@ int main(int argc, char **argv)
 			double gain_db, rest_db;
 
 			sine_figures(sines[index].hertz, sines[index].rate, sines[index].frequency, &gain_db, &rest_db);
-			//CHECK(fabs(gain_db) < sines[index].gain_db && rest_db < sines[index].rest_db,
+			CHECK(fabs(gain_db) < sines[index].gain_db && rest_db < sines[index].rest_db,
 				"%.0f Hz at %lu Hz, played at %lu: gain %.2f dB, the rest %.1f dB", sines[index].hertz,
 				sines[index].rate, sines[index].frequency, gain_db, rest_db);
 		}
@@ -505,10 +505,10 @@ int main(int argc, char **argv)
 
 		/* 18 kHz at 44.1 kHz, played at 96 kHz: 39 kHz */
 		sine_figures(18000.0, 44100, 96000, &gain_db, &rest_db);
-		//CHECK(rest_db < -60.0, "an alias of 39 kHz %.1f dB", rest_db);
+		CHECK(rest_db < -60.0, "an alias of 39 kHz %.1f dB", rest_db);
 		/* 15 kHz at 44.1 kHz, played at 88.2 kHz: 30 kHz */
 		sine_figures(15000.0, 44100, 88200, &gain_db, &rest_db);
-		//CHECK(rest_db < -60.0, "an alias of 30 kHz %.1f dB", rest_db);
+		CHECK(rest_db < -60.0, "an alias of 30 kHz %.1f dB", rest_db);
 		return 0;
 	}
 	/* a voice out of earshot moves on as one heard does: once it is audible
