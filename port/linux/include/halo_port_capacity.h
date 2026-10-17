@@ -63,7 +63,7 @@ campaign map's dialogue and music did, "SOUND CACHE BLOWN" in debug.txt).
 The desktop builds' cache is 16 MB; Android's and the web build's windows keep
 the Xbox's. */
 
-#if defined(HALO_ARM64_GUEST) || defined(HALO_WEB)
+#if (defined(HALO_ARM64_GUEST) && !defined(__APPLE__)) || defined(HALO_WEB)
 #define HALO_PORT_SOUND_CACHE_SIZE 0x400000 /* (0x400000) */
 #else
 #define HALO_PORT_SOUND_CACHE_SIZE 0x1000000 /* (0x400000) */
