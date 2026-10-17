@@ -70,10 +70,6 @@ int host_sdl_has_screen_keyboard(void);
 
 /* ---------- message boxes and dialogs */
 
-/* buttons: their flags, numbers and texts (one after another, each ended by
-a NUL); the button pushed into pushed */
-int host_sdl_show_message_box(unsigned int flags, const char *title, const char *message, int button_count,
-	const int *button_flags, const int *button_ids, const char *button_texts, int *pushed);
 /* opens the system's file picker; a request number to poll
 (host_sdl_dialog_result), 0 if it cannot open. Filters: their names and
 patterns, each ended by a NUL */

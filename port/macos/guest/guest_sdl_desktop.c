@@ -277,34 +277,6 @@ bool SDL_HasScreenKeyboardSupport(void)
 
 /* ---------- message boxes */
 
-bool SDL_ShowMessageBox(const SDL_MessageBoxData *data, int *buttonid)
-{
-	enum { BUTTONS = 8, TEXTS = 512 };
-	int flags[BUTTONS], ids[BUTTONS], pushed = -1, count = 0, index;
-	char texts[TEXTS];
-	size_t used = 0;
-	bool shown;
-
-	for (index = 0; index < data->numbuttons && count < BUTTONS; index++)
-	{
-		const char *text = data->buttons[index].text ? data->buttons[index].text : "";
-		size_t length = strlen(text) + 1;
-
-		if (used + length > sizeof(texts))
-			break;
-		memcpy(texts + used, text, length);
-		used += length;
-		flags[count] = (int)data->buttons[index].flags;
-		ids[count] = data->buttons[index].buttonID;
-		count++;
-	}
-	shown = host_sdl_show_message_box((unsigned int)data->flags, data->title ? data->title : "",
-		data->message ? data->message : "", count, flags, ids, texts, &pushed) != 0;
-	if (buttonid)
-		*buttonid = pushed;
-	return shown;
-}
-
 /* ---------- file dialogs */
 
 #define DIALOGS 4
