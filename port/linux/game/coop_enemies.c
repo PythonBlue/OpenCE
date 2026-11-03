@@ -446,6 +446,8 @@ short coop_enemies_extra_count(
 	if (count <= 0 || !coop_enemies_on())
 		return 0;
 	encounter = encounter_get(encounter_index);
+	if (!game_team_is_enemy(_game_team_player, encounter->team_index) && !game_team_is_ally(_game_team_player, encounter->team_index))
+		return 0;
 	if (coop_enemies.mode == _coop_enemies_multiplier)
 		extra = (long)count * (coop_enemies.multiplier - 1);
 	else
@@ -602,7 +604,8 @@ boolean coop_enemies_rider_unseated(
 		return FALSE;
 	}
 	actor = actor_get(unit->unit.actor_index);
-	if (actor->meta.swarm || actor->meta.encounter_index == NONE)
+	if (actor->meta.swarm || actor->meta.encounter_index == NONE ||
+		(!game_team_is_enemy(_game_team_player, encounter_get(actor->meta.encounter_index)->team_index)) && !game_team_is_ally(_game_team_player, encounter_get(actor->meta.encounter_index)->team_index)))
 	{
 		return FALSE;
 	}
