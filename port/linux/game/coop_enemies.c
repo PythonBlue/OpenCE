@@ -605,7 +605,7 @@ boolean coop_enemies_rider_unseated(
 	}
 	actor = actor_get(unit->unit.actor_index);
 	if (actor->meta.swarm || actor->meta.encounter_index == NONE ||
-		(!game_team_is_enemy(_game_team_player, encounter_get(actor->meta.encounter_index)->team_index)) && !game_team_is_ally(_game_team_player, encounter_get(actor->meta.encounter_index)->team_index)))
+		((!game_team_is_enemy(_game_team_player, encounter_get(actor->meta.encounter_index)->team_index)) && !game_team_is_ally(_game_team_player, encounter_get(actor->meta.encounter_index)->team_index)))
 	{
 		return FALSE;
 	}
