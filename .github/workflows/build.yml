@@ -111,7 +111,6 @@ jobs:
         with:
           name: halo-linux-release
           path: dist/halo-linux-release
-          retention-days: 3
 
   android:
     # The runner image has the Android SDK and NDK, a JDK and CMake.
@@ -196,7 +195,6 @@ jobs:
         with:
           name: halo-android-release
           path: dist/halo-android-release
-          retention-days: 3
 
   windows:
     # The runner image has LLVM, Python and Visual Studio's x86 libraries and
@@ -257,7 +255,6 @@ jobs:
         with:
           name: halo-windows-release
           path: dist/halo-windows-release
-          retention-days: 3
 
       # the PDBs, for crash reports' backtraces (tools/ci_build.py)
       - uses: actions/upload-artifact@v4
@@ -270,7 +267,6 @@ jobs:
         with:
           name: halo-windows-release-symbols
           path: dist/halo-windows-release-symbols
-          retention-days: 3
 
   web:
     # Emscripten (emsdk, the version below, cached) builds the web port's
@@ -349,7 +345,6 @@ jobs:
           name: halo-web-release
           path: dist/halo-web-release
           include-hidden-files: true
-          retention-days: 3
 
   release:
     # The eight builds (and the Windows builds' PDBs) as a release, tagged
